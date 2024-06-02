@@ -8,7 +8,7 @@ const images = [
   { url: "https://picsum.photos/id/239/200/300" },
 ];
 
-    // Function to create a promise that resolves when an image is loaded
+   // Function to create a promise that resolves when an image is loaded
     function loadImage(src) {
       return new Promise((resolve, reject) => {
         const img = new Image();
@@ -24,21 +24,17 @@ const images = [
       return Promise.all(promises);
     }
 
+    // Function to display images
+    function displayImages(images) {
+      output.innerHTML = ''; // Clear any previous images
+      images.forEach(img => output.appendChild(img));
+    }
+
     // Event listener for button click
     btn.addEventListener('click', () => {
       loadImages(images)
         .then(loadedImages => {
-          output.innerHTML = ''; // Clear any previous images
-          loadedImages.forEach((img, index) => {
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = `image${index + 1}.jpg`;
-            link.appendChild(img);
-            output.appendChild(link);
-            
-            // Programmatically click the link to start download
-            link.click();
-          });
+          displayImages(loadedImages);
         })
         .catch(error => {
           console.error('Error loading images:', error);
